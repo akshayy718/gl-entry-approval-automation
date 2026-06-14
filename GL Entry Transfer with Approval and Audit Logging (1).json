@@ -1,0 +1,421 @@
+{
+  "name": "GL Entry Transfer with Approval and Audit Logging",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "entryId",
+              "value": "={{ $json.entryId }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "amount",
+              "value": "={{ $json.amount }}",
+              "type": "number"
+            },
+            {
+              "id": "id-4",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "requesterEmail",
+              "value": "={{ $json.requesterEmail }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "approverEmail",
+              "value": "={{ $json.approverEmail }}",
+              "type": "string"
+            },
+            {
+              "id": "4cb48763-aba6-43d9-b033-d2ff160e52ab",
+              "name": "accountCode",
+              "value": "={{ $json.accountCode }}",
+              "type": "string"
+            },
+            {
+              "id": "73eb3141-8c3e-407c-95d0-095daca66890",
+              "name": "=currency",
+              "value": "={{ $json.currency }}",
+              "type": "string"
+            },
+            {
+              "id": "d0dc0934-73c5-4e4e-a644-11a87c0bf941",
+              "name": "=accountName",
+              "value": "={{ $json.accountName }}",
+              "type": "string"
+            },
+            {
+              "id": "0308f7c5-f8d0-4b4e-b74f-e17e2457a8ec",
+              "name": "=postingDate",
+              "value": "={{ $json.postingDate }}",
+              "type": "string"
+            },
+            {
+              "id": "10310d34-329c-4244-9b72-78bf7d05f252",
+              "name": "=costCenter",
+              "value": "={{ $json.costCenter }}",
+              "type": "string"
+            },
+            {
+              "id": "803863e1-d50f-4cba-ad33-a54841b79993",
+              "name": "=projectCode",
+              "value": "={{ $json.projectCode }}",
+              "type": "string"
+            },
+            {
+              "id": "8c1a56b6-b474-445f-964f-0374a187e109",
+              "name": "=ledgerType",
+              "value": "={{ $json.ledgerType }}",
+              "type": "string"
+            },
+            {
+              "id": "fe349d31-66a5-4243-969c-9d286e993a5b",
+              "name": "=documentType",
+              "value": "={{ $json.documentType }}",
+              "type": "string"
+            },
+            {
+              "id": "1f307655-6e31-4a1c-8655-0bd42044ad08",
+              "name": "=fiscalYear",
+              "value": "={{ $json.fiscalYear }}",
+              "type": "string"
+            },
+            {
+              "id": "bd299fac-ffcc-4cfd-957a-6d29a6167f74",
+              "name": "=period",
+              "value": "={{ $json.period }}",
+              "type": "string"
+            },
+            {
+              "id": "0a615e6a-a480-462b-9ffe-8da4b828219c",
+              "name": "=companyCode",
+              "value": "={{ $json.companyCode }}",
+              "type": "string"
+            },
+            {
+              "id": "556c14a6-8a77-48f9-9109-d6eda82b6abf",
+              "name": "=createdBy",
+              "value": "={{ $json.createdBy }}",
+              "type": "string"
+            },
+            {
+              "id": "bc06523b-fd63-4c00-98c5-84c6c0081274",
+              "name": "=debitAccount",
+              "value": "={{ $json.debitAccount }}",
+              "type": "string"
+            },
+            {
+              "id": "e5204b8b-5b72-497f-af6a-15547f122f41",
+              "name": "=creditAccount",
+              "value": "={{ $json.creditAccount }}",
+              "type": "string"
+            },
+            {
+              "id": "4982b42e-a575-44f7-b3c3-19f115bab400",
+              "name": "=taxCode",
+              "value": "={{ $json.taxCode }}",
+              "type": "string"
+            },
+            {
+              "id": "66a8891f-61e3-44ea-b619-f36ead1cb5a9",
+              "name": "=referenceNumber",
+              "value": "={{ $json.referenceNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "09796b07-92a1-43b9-a90d-899f0e477d24",
+              "name": "=status",
+              "value": "={{ $json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "20f61ce1-f007-4003-83b6-58ae4d9e9844",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": "={{ false }}",
+        "options": {}
+      },
+      "id": "edce6b71-eb76-4f50-a1b9-643eb9a7a235",
+      "name": "Extract Entry Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "akshaysanthosh718@gmail.com",
+        "subject": "=GL Entry Approval Required - Entry {{ $json.entryId }}",
+        "message": "=<h2>GL Entry Approval Required</h2>\n<p><b>Entry ID:</b> {{ $json.entryId }}</p>\n<p><b>Amount:</b> {{ $json.amount }} {{ $json.currency }}</p>\n<p><b>Account:</b> {{ $json.accountCode }} - {{ $json.accountName }}</p>\n<p><b>Cost Center:</b> {{ $json.costCenter }}</p>\n<p><b>Project:</b> {{ $json.projectCode }}</p>\n<p><b>Date:</b> {{ $json.date }}</p>\n<p><b>Description:</b> {{ $json.description }}</p>\n<p><b>Created By:</b> {{ $json.createdBy }}</p>\n<p><b>Company:</b> {{ $json.companyCode }}</p>",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "disapproveLabel": "Reject"
+          }
+        },
+        "options": {}
+      },
+      "id": "82d8eb20-90e9-4a5b-87fe-0609bfcc9fc3",
+      "name": "Send Approval Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        320
+      ],
+      "webhookId": "6d527338-85d8-41cb-802d-87444ad119af",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "jFSAM1tcmaBGqQLG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"entryId\": \"GL-001\",\n  \"amount\": \"5000\",\n  \"accountCode\": \"ACC-101\",\n  \"date\": \"2026-03-09\",\n  \"description\": \"Test GL Entry Transfer\"\n}",
+        "options": {}
+      },
+      "id": "ac2e2b47-c7a5-4d5f-a404-184fc9b2bddb",
+      "name": "Create GL Entry in Target System",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "akshaysanthosh718@gmail.com",
+        "subject": "={{ $('Extract Entry Details').item.json.entryId }}",
+        "message": "=<h2>GL Entry Rejected</h2>\n<ul>\n<li><strong>Entry ID:</strong> {{ $('Extract Entry Details').item.json.entryId }}</li>\n<li><strong>Amount:</strong> {{ $('Extract Entry Details').item.json.amount }} {{ $('Extract Entry Details').item.json.currency }}</li>\n<li><strong>Account Code:</strong> {{ $('Extract Entry Details').item.json.accountCode }}</li>\n<li><strong>Account Name:</strong> {{ $('Extract Entry Details').item.json.accountName }}</li>\n<li><strong>Date:</strong> {{ $('Extract Entry Details').item.json.date }}</li>\n<li><strong>Description:</strong> {{ $('Extract Entry Details').item.json.description }}</li>\n<li><strong>Cost Center:</strong> {{ $('Extract Entry Details').item.json.costCenter }}</li>\n</ul>\n<p><strong>Rejection Reason:</strong> No reason provided</p>\n<p>Please review and resubmit.</p>",
+        "options": {}
+      },
+      "id": "b8a62ee8-80fe-4234-bafc-9c1d03d2b89e",
+      "name": "Send Rejection Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        688,
+        368
+      ],
+      "webhookId": "29e73d87-3aaa-4f4a-a2d7-ca3525f4c60a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "jFSAM1tcmaBGqQLG",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "daysInterval": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "98b567cc-4a7c-49ff-981d-ef2341f1d9ff",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      entryId: \"GL-2026-001\",\n      amount: 5000.00,\n      currency: \"AED\",\n      accountCode: \"ACC-101\",\n      accountName: \"Office Supplies Expense\",\n      date: \"2026-03-09\",\n      postingDate: \"2026-03-09\",\n      description: \"Office supplies for Q1 2026\",\n      costCenter: \"DEPT-IT\",\n      projectCode: \"PROJ-001\",\n      ledgerType: \"1\",\n      documentType: \"GL\",\n      fiscalYear: \"2026\",\n      period: \"3\",\n      companyCode: \"RGCT-001\",\n      createdBy: \"finance@rgct.com\",\n      requesterEmail: \"akshaysanthosh718@gmail.com\",\n      approverEmail: \"akshaysanthosh718@gmail.com\",\n      debitAccount: \"ACC-101\",\n      creditAccount: \"ACC-501\",\n      taxCode: \"VAT-05\",\n      contraAccount: \"ACC-501\",\n      bankAccount: \"BANK-001\",\n      referenceNumber: \"REF-2026-001\",\n      status: \"PENDING\"\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0c5d447c-6e71-49d0-adf9-2fee30dd994c",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "364bb745-cb1d-4cd3-ba33-85f2f7a82b97",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "={{ true }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        432,
+        320
+      ],
+      "id": "b7b8cc51-0827-4d8a-bd2d-18c78f2d94e6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "akshaysanthosh718@gmail.com",
+        "subject": "=GL Entry Approved & Posted - {{ $('Extract Entry Details').item.json.entryId }}",
+        "message": "=<h2>✅ GL Entry Successfully Posted to Sage X3</h2> <p><strong>Entry ID:</strong> {{ $('Extract Entry Details').item.json.entryId }}</p> <p><strong>Amount:</strong> {{ $('Extract Entry Details').item.json.amount }} {{ $('Extract Entry Details').item.json.currency }}</p> <p><strong>Account:</strong> {{ $('Extract Entry Details').item.json.accountCode }}</p> <p><strong>Status: POSTED ✅</strong></p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        224
+      ],
+      "id": "bd811f1f-73bb-4033-8044-d50f71d61245",
+      "name": "Send a message",
+      "webhookId": "7e19a258-dec2-43bf-966d-0d71a34e5212",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "jFSAM1tcmaBGqQLG",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract Entry Details": {
+      "main": [
+        [
+          {
+            "node": "Send Approval Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Approval Email": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Extract Entry Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create GL Entry in Target System",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Rejection Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create GL Entry in Target System": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "26972d5d-3ec7-4769-9c5a-f625dc339a16",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c51d9712192595f568503b5dfdb4e08d5cf824250b9c003c7330ed121fef48d2"
+  },
+  "nodeGroups": [],
+  "id": "0KffnHGbbMkp4q3q",
+  "tags": []
+}
