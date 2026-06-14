@@ -1,31 +1,8 @@
 <div align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0,EA4B8B,FF6B9D,FFB3D1&height=200&section=header&fontSize=42&fontColor=fff&animation=fadeIn&fontAlignY=36" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0,EA4B8B,FF6B9D,FFB3D1&height=200&section=header&text=GL%20Entry%20Approval%20Automation&fontSize=40&fontColor=fff&animation=fadeIn&fontAlignY=45&desc=n8n%20Cloud%20%C2%B7%20SAP%20SuccessFactors%20%C2%B7%20Sage%20X3%20%C2%B7%20Gmail%20API&descAlignY=68&descSize=16" width="100%"/>
 </div>
 
 <div align="center">
-
-<pre>
- ██████╗ ██╗         ███████╗███╗   ██╗████████╗██████╗ ██╗   ██╗
-██╔════╝ ██║         ██╔════╝████╗  ██║╚══██╔══╝██╔══██╗╚██╗ ██╔╝
-██║  ███╗██║         █████╗  ██╔██╗ ██║   ██║   ██████╔╝ ╚████╔╝ 
-██║   ██║██║         ██╔══╝  ██║╚██╗██║   ██║   ██╔══██╗  ╚██╔╝  
-╚██████╔╝███████╗    ███████╗██║ ╚████║   ██║   ██║  ██║   ██║   
- ╚═════╝ ╚══════╝    ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝  
-
- █████╗ ██████╗ ██████╗ ██████╗  ██████╗ ██╗   ██╗ █████╗ ██╗     
-██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██║   ██║██╔══██╗██║     
-███████║██████╔╝██████╔╝██████╔╝██║   ██║██║   ██║███████║██║     
-██╔══██║██╔═══╝ ██╔═══╝ ██╔══██╗██║   ██║╚██╗ ██╔╝██╔══██║██║     
-██║  ██║██║     ██║     ██║  ██║╚██████╔╝ ╚████╔╝ ██║  ██║███████╗
-╚═╝  ╚═╝╚═╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝╚══════╝
-
- █████╗ ██╗   ██╗████████╗ ██████╗ ███╗   ███╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
-██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗████╗ ████║██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
-███████║██║   ██║   ██║   ██║   ██║██╔████╔██║███████║   ██║   ██║██║   ██║██╔██╗ ██║
-██╔══██║██║   ██║   ██║   ██║   ██║██║╚██╔╝██║██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
-██║  ██║╚██████╔╝   ██║   ╚██████╔╝██║ ╚═╝ ██║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
-╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-</pre>
 
 ### 🎬 Demo Video → **[Watch Full Workflow Demo](https://drive.google.com/file/d/1oscpLaeHALSRTYQPnyXWFAlQk9K1nxEc/view?usp=sharing)**
 
@@ -89,131 +66,122 @@ Eliminates manual GL approval bottlenecks, enforces segregation of duties, and e
 ## 🏗️ Workflow Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    SCHEDULE TRIGGER                          │
-│                                                             │
-│   Runs automatically every 15 days (configurable)           │
-│   Kicks off the GL entry fetch process                      │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
+╔═══════════════════════════════════════════════════════════════╗
+║                    ⏰ SCHEDULE TRIGGER                        ║
+║           Runs automatically · Kicks off GL fetch             ║
+╚══════════════════════════╦════════════════════════════════════╝
+                           ║
                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│              CODE NODE — GL DATA GENERATION                  │
-│                                                             │
-│   Generates / fetches GL entry with 23 fields:             │
-│   entryId · amount · currency · accountCode · accountName   │
-│   date · postingDate · costCenter · projectCode · ledgerType│
-│   documentType · fiscalYear · period · companyCode          │
-│   debitAccount · creditAccount · taxCode · referenceNumber  │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
+╔═══════════════════════════════════════════════════════════════╗
+║              { } CODE NODE — GL DATA (JavaScript)            ║
+║                                                               ║
+║   entryId · amount · currency · accountCode · accountName     ║
+║   date · postingDate · costCenter · projectCode · ledgerType  ║
+║   documentType · fiscalYear · period · companyCode            ║
+║   debitAccount · creditAccount · taxCode · referenceNumber    ║
+╚══════════════════════════╦════════════════════════════════════╝
+                           ║
                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│            EXTRACT ENTRY DETAILS (Set Node)                  │
-│                                                             │
-│   Maps 23 GL fields to structured variables                 │
-│   Validates and types each field correctly                  │
-│   Prepares payload for approval email                       │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
+╔═══════════════════════════════════════════════════════════════╗
+║           ✏️  EXTRACT ENTRY DETAILS (Set Node)               ║
+║      Maps 23 GL fields · Validates types · Prepares payload   ║
+╚══════════════════════════╦════════════════════════════════════╝
+                           ║
                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│         SEND APPROVAL EMAIL (Gmail API + OAuth 2.0)          │
-│                                                             │
-│   Sends professional HTML email to finance manager          │
-│   Shows: Entry ID · Amount · Account · Cost Center          │
-│   Contains: [Approve] and [Reject] buttons                  │
-│   PAUSES workflow — waits for manager response              │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
+╔═══════════════════════════════════════════════════════════════╗
+║         📧 SEND APPROVAL EMAIL (Gmail API + OAuth 2.0)        ║
+║                                                               ║
+║   Professional HTML email → Finance Manager                   ║
+║   Entry ID · Amount · Account · Cost Center · Project         ║
+║   [ Reject ]  [ ✅ Approve ]  buttons embedded in email      ║
+║                                                               ║
+║              ⏸️  WORKFLOW PAUSES HERE                         ║
+║              Waiting for manager response...                  ║
+╚══════════════════════════╦════════════════════════════════════╝
+                           ║
                     Manager responds
-                           │
+                           ║
                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                IF NODE — APPROVAL DECISION                   │
-│                                                             │
-│   Checks: $json.data.approved === true                      │
-│   TRUE  → Approved path                                     │
-│   FALSE → Rejected path                                     │
-└─────────────┬───────────────────────────┬───────────────────┘
-              │                           │
-         TRUE ▼                      FALSE ▼
-┌─────────────────────┐     ┌──────────────────────────────┐
-│  CREATE GL ENTRY    │     │    SEND REJECTION EMAIL       │
-│  IN SAGE X3         │     │                              │
-│                     │     │  Notifies requester with:    │
-│  POST to Sage X3    │     │  Entry ID · Amount · Date    │
-│  REST API endpoint  │     │  Account Code · Description  │
-│  Maps all fields    │     │  Rejection reason            │
-│  to Sage X3 schema: │     └──────────────────────────────┘
-│  ACCNUM · AMTCUR    │
-│  ACCDAT · DESVCR    │
-│  LEDTYP · CCE · PJT │
-└──────────┬──────────┘
-           │
+╔═══════════════════════════════════════════════════════════════╗
+║                🔀 IF NODE — APPROVAL DECISION                 ║
+║           $json.data.approved === true ?                      ║
+╚══════════╦════════════════════════════════════╦══════════════╝
+           ║ TRUE ✅                             ║ FALSE ❌
+           ▼                                    ▼
+╔══════════════════════╗            ╔═══════════════════════════╗
+║  🌐 CREATE GL ENTRY  ║            ║  📧 SEND REJECTION EMAIL  ║
+║     IN SAGE X3       ║            ║                           ║
+║                      ║            ║  Notifies requester:      ║
+║  POST → REST API     ║            ║  Entry ID · Amount        ║
+║  GACCENTRY endpoint  ║            ║  Account · Date           ║
+║                      ║            ║  Rejection reason         ║
+║  ACCNUM · AMTCUR     ║            ╚═══════════════════════════╝
+║  ACCDAT · DESVCR     ║
+║  LEDTYP · CCE · PJT  ║
+╚══════════╦═══════════╝
+           ║
            ▼
-┌─────────────────────────────────────────────────────────────┐
-│              SEND POSTED CONFIRMATION EMAIL                  │
-│                                                             │
-│   Confirms to requester: GL Entry Successfully Posted ✅    │
-│   Includes: Entry ID · Amount · Account · Status: POSTED    │
-└─────────────────────────────────────────────────────────────┘
+╔═══════════════════════════════════════════════════════════════╗
+║           ✅ SEND POSTED CONFIRMATION EMAIL                   ║
+║    GL Entry Successfully Posted to Sage X3 · Status: POSTED   ║
+╚═══════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## 🔄 Approval Flow Diagram
+## 🌸 Approval Flow
 
 ```
-Finance Team                  n8n Workflow                Finance Manager
-     │                             │                             │
-     │  GL Entry Created           │                             │
-     │ ─────────────────────────► │                             │
-     │                             │                             │
-     │                             │  Fetch GL Entry             │
-     │                             │  (Schedule Trigger)         │
-     │                             │                             │
-     │                             │  Extract 23 Fields          │
-     │                             │  ┌─────────────────┐        │
-     │                             │  │ entryId         │        │
-     │                             │  │ amount: 5000 AED│        │
-     │                             │  │ accountCode     │        │
-     │                             │  │ costCenter      │        │
-     │                             │  │ projectCode     │        │
-     │                             │  └─────────────────┘        │
-     │                             │                             │
-     │                             │  Send Approval Email ──────►│
-     │                             │  [Approve] [Reject]         │
-     │                             │                             │
-     │                             │◄── Manager clicks Approve ──│
-     │                             │                             │
-     │                             │  IF approved = true         │
-     │                             │  POST to Sage X3 API        │
-     │                             │                             │
-     │◄── Posted Confirmation ─────│                             │
-     │    ✅ GL-2026-001 Posted     │                             │
-     │                             │                             │
+  👤 FINANCE TEAM          🤖 n8n WORKFLOW           👔 MANAGER
+       │                         │                        │
+       │  GL Entry Created        │                        │
+       │ ───────────────────────► │                        │
+       │                         │                        │
+       │                    ⏰ Schedule                    │
+       │                    triggers run                   │
+       │                         │                        │
+       │                    { } Generate                   │
+       │                    23 GL fields                   │
+       │                         │                        │
+       │                    ✏️  Extract &                  │
+       │                    validate fields                │
+       │                         │                        │
+       │                         │ ──── 📧 Approval ─────►│
+       │                         │      Email sent         │
+       │                         │      [Reject][Approve]  │
+       │                         │                        │
+       │                         │ ◄─── ✅ Clicks ────────│
+       │                         │      Approve            │
+       │                         │                        │
+       │                    🔀 IF node                     │
+       │                    approved=true                  │
+       │                         │                        │
+       │                    🌐 POST to                     │
+       │                    Sage X3 API                    │
+       │                         │                        │
+       │ ◄─── 📬 Posted ─────────│                        │
+       │      Confirmation        │                        │
+       │      ✅ GL-2026-001      │                        │
+       │         Posted           │                        │
 ```
 
 ---
 
 ## 🗂️ GL Field Mapping — SuccessFactors → Sage X3
 
-```
-SAP SuccessFactors Field          Sage X3 API Field
-─────────────────────────────     ─────────────────
-entryId          ──────────────►  VCRNUM  (Voucher Number)
-amount           ──────────────►  AMTCUR  (Amount in Currency)
-accountCode      ──────────────►  ACCNUM  (Account Number)
-postingDate      ──────────────►  ACCDAT  (Accounting Date)
-description      ──────────────►  DESVCR  (Description)
-ledgerType       ──────────────►  LEDTYP  (Ledger Type)
-currency         ──────────────►  CUR     (Currency Code)
-costCenter       ──────────────►  CCE     (Cost Center)
-projectCode      ──────────────►  PJT     (Project Code)
-fiscalYear       ──────────────►  FISCAL  (Fiscal Year)
-period           ──────────────►  PER     (Accounting Period)
-```
+| SAP SuccessFactors Field | → | Sage X3 API Field | Description |
+|---|---|---|---|
+| `entryId` | → | `VCRNUM` | Voucher Number |
+| `amount` | → | `AMTCUR` | Amount in Currency |
+| `accountCode` | → | `ACCNUM` | Account Number |
+| `postingDate` | → | `ACCDAT` | Accounting Date |
+| `description` | → | `DESVCR` | Description / Narration |
+| `ledgerType` | → | `LEDTYP` | Ledger Type |
+| `currency` | → | `CUR` | Currency Code |
+| `costCenter` | → | `CCE` | Cost Center |
+| `projectCode` | → | `PJT` | Project Code |
+| `fiscalYear` | → | `FISCAL` | Fiscal Year |
+| `period` | → | `PER` | Accounting Period |
 
 ---
 
@@ -258,98 +226,32 @@ gl-entry-approval-automation/
 ### Import Workflow
 
 ```bash
-# 1. Download the workflow JSON
-# GL_Entry_Approval_Workflow.json
-
-# 2. Open n8n Cloud
-# Go to app.n8n.cloud
-
-# 3. Create new workflow
-# Click "..." → "Import from file"
-# Select GL_Entry_Approval_Workflow.json
-
-# 4. Connect credentials
-# Gmail → OAuth 2.0 (follow Google auth flow)
-# Sage X3 → Basic Auth (username + password)
-# SuccessFactors → Basic Auth (username + API key)
-
-# 5. Update configuration
-# Replace mock GL data with real SuccessFactors API endpoint
-# Replace jsonplaceholder URL with real Sage X3 endpoint
-# Update approver email address
-
-# 6. Activate workflow
-# Click "Publish" → Toggle Active
+# 1. Open n8n Cloud → app.n8n.cloud
+# 2. Create new workflow
+# 3. Click "..." → "Import from file"
+# 4. Select GL_Entry_Approval_Workflow.json
+# 5. Connect Gmail credentials (OAuth 2.0)
+# 6. Update approver email address
+# 7. Replace mock URLs with real API endpoints
+# 8. Click Publish → Activate
 ```
 
-### Configure Sage X3 Endpoint
+### Sage X3 API Endpoint
 ```
-POST https://{your-sage-x3-server}/syracuse/collaboration/syracuse/api/v1/GESBPC/GACCENTRY
-
-Headers:
-  Content-Type: application/json
-  Authorization: Basic {base64(username:password)}
+POST https://{server}/syracuse/collaboration/syracuse/api/v1/GESBPC/GACCENTRY
 
 Body:
 {
   "ACCNUM": "ACC-101",
   "AMTCUR": 5000.00,
   "ACCDAT": "20260309",
-  "DESVCR": "Office supplies for Q1 2026",
+  "DESVCR": "Office supplies Q1 2026",
   "LEDTYP": "1",
   "CUR": "AED",
   "CCE": "DEPT-IT",
   "PJT": "PROJ-001"
 }
 ```
-
-### Configure SuccessFactors Endpoint
-```
-GET https://{api-server}.successfactors.com/odata/v2/GLAccount
-
-Headers:
-  Authorization: Basic {base64(username:apikey)}
-  Accept: application/json
-```
-
----
-
-## 📧 Approval Email Preview
-
-```
-┌─────────────────────────────────────────────┐
-│         GL Entry Approval Required           │
-│                                             │
-│  Entry ID:    GL-2026-001                   │
-│  Amount:      5000 AED                      │
-│  Account:     ACC-101 - Office Supplies     │
-│  Cost Center: DEPT-IT                       │
-│  Project:     PROJ-001                      │
-│  Date:        2026-03-09                    │
-│  Description: Office supplies for Q1 2026   │
-│  Created By:  finance@rgct.com              │
-│  Company:     RGCT-001                      │
-│                                             │
-│  ┌──────────┐    ┌──────────────────────┐   │
-│  │  Reject  │    │       Approve        │   │
-│  └──────────┘    └──────────────────────┘   │
-│                                             │
-│         Automated with n8n                  │
-└─────────────────────────────────────────────┘
-```
-
----
-
-## 🔮 Production Roadmap
-
-- [ ] **Real SuccessFactors API** — replace mock data with live OData endpoint
-- [ ] **Real Sage X3 API** — replace placeholder with production GACCENTRY endpoint
-- [ ] **Multi-level approval** — CFO approval for entries above AED 50,000
-- [ ] **Google Sheets audit log** — full audit trail with approver identity + timestamp
-- [ ] **Duplicate detection** — prevent same GL entry being submitted twice
-- [ ] **Reminder escalation** — auto-reminder if approval pending > 24 hours
-- [ ] **Batch processing** — handle multiple GL entries in single execution
-- [ ] **Dashboard** — approval rates, pending count, processing times
 
 ---
 
@@ -363,6 +265,18 @@ Headers:
 | Hours of manual data entry | Instant API-to-API transfer |
 | No rejection notifications | Instant requester notification with reason |
 | No escalation process | Error notifications to admin on failure |
+
+---
+
+## 🔮 Production Roadmap
+
+- [ ] **Real SuccessFactors API** — replace mock data with live OData endpoint
+- [ ] **Real Sage X3 API** — replace placeholder with production GACCENTRY endpoint
+- [ ] **Multi-level approval** — CFO approval for entries above AED 50,000
+- [ ] **Google Sheets audit log** — full audit trail with approver identity + timestamp
+- [ ] **Duplicate detection** — prevent same GL entry being submitted twice
+- [ ] **Reminder escalation** — auto-reminder if approval pending > 24 hours
+- [ ] **Batch processing** — handle multiple GL entries in single execution
 
 ---
 
