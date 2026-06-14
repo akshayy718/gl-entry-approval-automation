@@ -1,5 +1,10 @@
 <div align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0,EA4B8B,FF6B9D,FFB3D1&height=200&section=header&text=GL%20Entry%20Approval%20Automation&fontSize=40&fontColor=fff&animation=fadeIn&fontAlignY=45&desc=n8n%20Cloud%20%C2%B7%20SAP%20SuccessFactors%20%C2%B7%20Sage%20X3%20%C2%B7%20Gmail%20API&descAlignY=68&descSize=16" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0,EA4B8B,FF6B9D,FFB3D1&height=150&section=header&animation=fadeIn" width="100%"/>
+
+# <span>🌸 GL Entry Approval Automation</span>
+
+### `n8n Cloud` · `SAP SuccessFactors` · `Sage X3` · `Gmail API` · `OAuth 2.0`
+
 </div>
 
 <div align="center">
@@ -31,8 +36,6 @@ An **enterprise-grade GL Entry Approval Automation** built on **n8n Cloud** that
 
 > 🏦 Every General Ledger entry is automatically fetched, routed to the approver via email, and posted to Sage X3 only after explicit approval — with full audit trail throughout.
 
-Eliminates manual GL approval bottlenecks, enforces segregation of duties, and ensures every financial entry is authorized before hitting the ERP system.
-
 ---
 
 ## ✨ Features
@@ -51,30 +54,17 @@ Eliminates manual GL approval bottlenecks, enforces segregation of duties, and e
 
 ---
 
-## 🎬 Demo Video
-
-<div align="center">
-
-| | Link | Description |
-|--|------|-------------|
-| 🎬 | [**Watch Full Workflow Demo**](https://drive.google.com/file/d/1oscpLaeHALSRTYQPnyXWFAlQk9K1nxEc/view?usp=sharing) | Complete end-to-end demo — approval + rejection flows |
-
-</div>
-
----
-
 ## 🏗️ Workflow Architecture
 
 ```
 ╔═══════════════════════════════════════════════════════════════╗
-║                    ⏰ SCHEDULE TRIGGER                        ║
-║           Runs automatically · Kicks off GL fetch             ║
+║  ⏰  SCHEDULE TRIGGER                                         ║
+║      Runs automatically · Kicks off GL entry fetch            ║
 ╚══════════════════════════╦════════════════════════════════════╝
                            ║
                            ▼
 ╔═══════════════════════════════════════════════════════════════╗
-║              { } CODE NODE — GL DATA (JavaScript)            ║
-║                                                               ║
+║  { }  CODE NODE — GL DATA  (JavaScript)                       ║
 ║   entryId · amount · currency · accountCode · accountName     ║
 ║   date · postingDate · costCenter · projectCode · ledgerType  ║
 ║   documentType · fiscalYear · period · companyCode            ║
@@ -83,38 +73,31 @@ Eliminates manual GL approval bottlenecks, enforces segregation of duties, and e
                            ║
                            ▼
 ╔═══════════════════════════════════════════════════════════════╗
-║           ✏️  EXTRACT ENTRY DETAILS (Set Node)               ║
-║      Maps 23 GL fields · Validates types · Prepares payload   ║
+║  ✏️   EXTRACT ENTRY DETAILS  (Set Node)                       ║
+║       Maps 23 GL fields · Validates types · Prepares payload  ║
 ╚══════════════════════════╦════════════════════════════════════╝
                            ║
                            ▼
 ╔═══════════════════════════════════════════════════════════════╗
-║         📧 SEND APPROVAL EMAIL (Gmail API + OAuth 2.0)        ║
-║                                                               ║
-║   Professional HTML email → Finance Manager                   ║
-║   Entry ID · Amount · Account · Cost Center · Project         ║
-║   [ Reject ]  [ ✅ Approve ]  buttons embedded in email      ║
-║                                                               ║
-║              ⏸️  WORKFLOW PAUSES HERE                         ║
-║              Waiting for manager response...                  ║
+║  📧  SEND APPROVAL EMAIL  (Gmail API + OAuth 2.0)             ║
+║   Professional HTML email with all GL fields → Manager        ║
+║   [ Reject ]                    [ ✅ Approve ]                ║
+║              ⏸️  WORKFLOW PAUSES — Waiting for response        ║
 ╚══════════════════════════╦════════════════════════════════════╝
                            ║
                     Manager responds
                            ║
                            ▼
 ╔═══════════════════════════════════════════════════════════════╗
-║                🔀 IF NODE — APPROVAL DECISION                 ║
-║           $json.data.approved === true ?                      ║
+║  🔀  IF NODE — APPROVAL DECISION                              ║
+║      $json.data.approved === true ?                           ║
 ╚══════════╦════════════════════════════════════╦══════════════╝
            ║ TRUE ✅                             ║ FALSE ❌
            ▼                                    ▼
 ╔══════════════════════╗            ╔═══════════════════════════╗
-║  🌐 CREATE GL ENTRY  ║            ║  📧 SEND REJECTION EMAIL  ║
-║     IN SAGE X3       ║            ║                           ║
-║                      ║            ║  Notifies requester:      ║
-║  POST → REST API     ║            ║  Entry ID · Amount        ║
-║  GACCENTRY endpoint  ║            ║  Account · Date           ║
-║                      ║            ║  Rejection reason         ║
+║  🌐  CREATE GL ENTRY ║            ║  📧  SEND REJECTION EMAIL ║
+║      IN SAGE X3      ║            ║  Notifies requester with  ║
+║  POST to REST API    ║            ║  Entry details + reason   ║
 ║  ACCNUM · AMTCUR     ║            ╚═══════════════════════════╝
 ║  ACCDAT · DESVCR     ║
 ║  LEDTYP · CCE · PJT  ║
@@ -122,8 +105,8 @@ Eliminates manual GL approval bottlenecks, enforces segregation of duties, and e
            ║
            ▼
 ╔═══════════════════════════════════════════════════════════════╗
-║           ✅ SEND POSTED CONFIRMATION EMAIL                   ║
-║    GL Entry Successfully Posted to Sage X3 · Status: POSTED   ║
+║  ✅  SEND POSTED CONFIRMATION EMAIL                           ║
+║      GL Entry Successfully Posted to Sage X3 · POSTED ✅     ║
 ╚═══════════════════════════════════════════════════════════════╝
 ```
 
@@ -132,37 +115,23 @@ Eliminates manual GL approval bottlenecks, enforces segregation of duties, and e
 ## 🌸 Approval Flow
 
 ```
-  👤 FINANCE TEAM          🤖 n8n WORKFLOW           👔 MANAGER
-       │                         │                        │
-       │  GL Entry Created        │                        │
-       │ ───────────────────────► │                        │
-       │                         │                        │
-       │                    ⏰ Schedule                    │
-       │                    triggers run                   │
-       │                         │                        │
-       │                    { } Generate                   │
-       │                    23 GL fields                   │
-       │                         │                        │
-       │                    ✏️  Extract &                  │
-       │                    validate fields                │
-       │                         │                        │
-       │                         │ ──── 📧 Approval ─────►│
-       │                         │      Email sent         │
-       │                         │      [Reject][Approve]  │
-       │                         │                        │
-       │                         │ ◄─── ✅ Clicks ────────│
-       │                         │      Approve            │
-       │                         │                        │
-       │                    🔀 IF node                     │
-       │                    approved=true                  │
-       │                         │                        │
-       │                    🌐 POST to                     │
-       │                    Sage X3 API                    │
-       │                         │                        │
-       │ ◄─── 📬 Posted ─────────│                        │
-       │      Confirmation        │                        │
-       │      ✅ GL-2026-001      │                        │
-       │         Posted           │                        │
+  👤 FINANCE TEAM            🤖 n8n WORKFLOW             👔 MANAGER
+  ─────────────────        ───────────────────         ─────────────
+       │                          │                          │
+       │   GL Entry Created       │                          │
+       │ ────────────────────────►│                          │
+       │                     ⏰ Schedule triggers             │
+       │                     { } Generate 23 GL fields       │
+       │                     ✏️  Extract & validate           │
+       │                          │                          │
+       │                          │──── 📧 Approval ────────►│
+       │                          │     [Reject][✅ Approve]  │
+       │                          │◄─── ✅ Clicks Approve ───│
+       │                     🔀 IF approved = true           │
+       │                     🌐 POST to Sage X3 API          │
+       │◄─── 📬 Posted Confirmation ──────────────────────── │
+       │     ✅ GL-2026-001 POSTED                            │
+  ─────────────────        ───────────────────         ─────────────
 ```
 
 ---
@@ -217,40 +186,14 @@ gl-entry-approval-automation/
 
 ## ⚡ Quick Start
 
-### Prerequisites
-- n8n Cloud account (free trial) or self-hosted n8n
-- Gmail account with API access
-- SAP SuccessFactors API credentials (from your SF admin)
-- Sage X3 server URL + credentials (from your IT team)
-
-### Import Workflow
-
 ```bash
 # 1. Open n8n Cloud → app.n8n.cloud
-# 2. Create new workflow
-# 3. Click "..." → "Import from file"
-# 4. Select GL_Entry_Approval_Workflow.json
-# 5. Connect Gmail credentials (OAuth 2.0)
-# 6. Update approver email address
-# 7. Replace mock URLs with real API endpoints
-# 8. Click Publish → Activate
-```
-
-### Sage X3 API Endpoint
-```
-POST https://{server}/syracuse/collaboration/syracuse/api/v1/GESBPC/GACCENTRY
-
-Body:
-{
-  "ACCNUM": "ACC-101",
-  "AMTCUR": 5000.00,
-  "ACCDAT": "20260309",
-  "DESVCR": "Office supplies Q1 2026",
-  "LEDTYP": "1",
-  "CUR": "AED",
-  "CCE": "DEPT-IT",
-  "PJT": "PROJ-001"
-}
+# 2. Create new workflow → Import from file
+# 3. Select GL_Entry_Approval_Workflow.json
+# 4. Connect Gmail credentials (OAuth 2.0)
+# 5. Update approver email address
+# 6. Replace mock URLs with real API endpoints
+# 7. Click Publish → Activate
 ```
 
 ---
@@ -264,19 +207,16 @@ Body:
 | Entries posted without authorization | Mandatory approval gate before Sage X3 |
 | Hours of manual data entry | Instant API-to-API transfer |
 | No rejection notifications | Instant requester notification with reason |
-| No escalation process | Error notifications to admin on failure |
 
 ---
 
 ## 🔮 Production Roadmap
 
-- [ ] **Real SuccessFactors API** — replace mock data with live OData endpoint
-- [ ] **Real Sage X3 API** — replace placeholder with production GACCENTRY endpoint
-- [ ] **Multi-level approval** — CFO approval for entries above AED 50,000
-- [ ] **Google Sheets audit log** — full audit trail with approver identity + timestamp
-- [ ] **Duplicate detection** — prevent same GL entry being submitted twice
-- [ ] **Reminder escalation** — auto-reminder if approval pending > 24 hours
-- [ ] **Batch processing** — handle multiple GL entries in single execution
+- [ ] Real SuccessFactors API — replace mock data with live OData endpoint
+- [ ] Real Sage X3 API — replace placeholder with production GACCENTRY endpoint
+- [ ] Multi-level approval — CFO approval for entries above AED 50,000
+- [ ] Google Sheets audit log — full audit trail with approver identity + timestamp
+- [ ] Reminder escalation — auto-reminder if approval pending > 24 hours
 
 ---
 
